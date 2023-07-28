@@ -1,0 +1,494 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		1191EDAC2A74306F00895A97 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1191EDAA2A74305E00895A97 /* main.swift */; };
+		1191EDC52A74318700895A97 /* SwoxLib.h in Headers */ = {isa = PBXBuildFile; fileRef = 1191EDC42A74318700895A97 /* SwoxLib.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		1191EDD22A74337E00895A97 /* SwoxLib.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1191EDC22A74318700895A97 /* SwoxLib.framework */; };
+		1191EDD92A7433B000895A97 /* SwoxSocks5Server.swift in Sources */ = {isa = PBXBuildFile; fileRef = 116AEE5D2A71A69200FB94F1 /* SwoxSocks5Server.swift */; };
+		1191EDDA2A7433B000895A97 /* SwoxSessionFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1191ED8C2A73FA7F00895A97 /* SwoxSessionFactory.swift */; };
+		1191EDDB2A7433B000895A97 /* SwoxSocks5TCPSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1191ED882A73F8B900895A97 /* SwoxSocks5TCPSession.swift */; };
+		1191EDDC2A7433B000895A97 /* CommonMessages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1191ED862A73F82000895A97 /* CommonMessages.swift */; };
+		1191EDDD2A7433B000895A97 /* Socks5Address.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1191ED942A741E4500895A97 /* Socks5Address.swift */; };
+		1191EDDF2A7433B000895A97 /* SwoxSocks5Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1191ED922A7417C200895A97 /* SwoxSocks5Session.swift */; };
+		1191EDE02A7433B000895A97 /* SwoxSocks5UDPRelaySession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1191ED8A2A73F95500895A97 /* SwoxSocks5UDPRelaySession.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		1191ED982A742FB600895A97 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		116AEE5D2A71A69200FB94F1 /* SwoxSocks5Server.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwoxSocks5Server.swift; sourceTree = "<group>"; };
+		1191ED862A73F82000895A97 /* CommonMessages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonMessages.swift; sourceTree = "<group>"; };
+		1191ED882A73F8B900895A97 /* SwoxSocks5TCPSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwoxSocks5TCPSession.swift; sourceTree = "<group>"; };
+		1191ED8A2A73F95500895A97 /* SwoxSocks5UDPRelaySession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwoxSocks5UDPRelaySession.swift; sourceTree = "<group>"; };
+		1191ED8C2A73FA7F00895A97 /* SwoxSessionFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwoxSessionFactory.swift; sourceTree = "<group>"; };
+		1191ED922A7417C200895A97 /* SwoxSocks5Session.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwoxSocks5Session.swift; sourceTree = "<group>"; };
+		1191ED942A741E4500895A97 /* Socks5Address.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Socks5Address.swift; sourceTree = "<group>"; };
+		1191ED9A2A742FB600895A97 /* swox */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = swox; sourceTree = BUILT_PRODUCTS_DIR; };
+		1191EDAA2A74305E00895A97 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
+		1191EDC22A74318700895A97 /* SwoxLib.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SwoxLib.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		1191EDC42A74318700895A97 /* SwoxLib.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SwoxLib.h; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		1191ED972A742FB600895A97 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1191EDD22A74337E00895A97 /* SwoxLib.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1191EDBF2A74318700895A97 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		116AEE4A2A71A64800FB94F1 = {
+			isa = PBXGroup;
+			children = (
+				116AEE552A71A64800FB94F1 /* Swox */,
+				1191EDC32A74318700895A97 /* SwoxLib */,
+				116AEE542A71A64800FB94F1 /* Products */,
+				1191EDD12A74337E00895A97 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		116AEE542A71A64800FB94F1 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				1191ED9A2A742FB600895A97 /* swox */,
+				1191EDC22A74318700895A97 /* SwoxLib.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		116AEE552A71A64800FB94F1 /* Swox */ = {
+			isa = PBXGroup;
+			children = (
+				1191EDAA2A74305E00895A97 /* main.swift */,
+			);
+			path = Swox;
+			sourceTree = "<group>";
+		};
+		1191ED8F2A740DBE00895A97 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				1191ED942A741E4500895A97 /* Socks5Address.swift */,
+				1191ED862A73F82000895A97 /* CommonMessages.swift */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		1191EDC32A74318700895A97 /* SwoxLib */ = {
+			isa = PBXGroup;
+			children = (
+				1191ED8F2A740DBE00895A97 /* Utils */,
+				116AEE5D2A71A69200FB94F1 /* SwoxSocks5Server.swift */,
+				1191ED922A7417C200895A97 /* SwoxSocks5Session.swift */,
+				1191ED882A73F8B900895A97 /* SwoxSocks5TCPSession.swift */,
+				1191ED8A2A73F95500895A97 /* SwoxSocks5UDPRelaySession.swift */,
+				1191ED8C2A73FA7F00895A97 /* SwoxSessionFactory.swift */,
+				1191EDC42A74318700895A97 /* SwoxLib.h */,
+			);
+			path = SwoxLib;
+			sourceTree = "<group>";
+		};
+		1191EDD12A74337E00895A97 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		1191EDBD2A74318700895A97 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1191EDC52A74318700895A97 /* SwoxLib.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		1191ED992A742FB600895A97 /* swox */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1191ED9E2A742FB700895A97 /* Build configuration list for PBXNativeTarget "swox" */;
+			buildPhases = (
+				1191ED962A742FB600895A97 /* Sources */,
+				1191ED972A742FB600895A97 /* Frameworks */,
+				1191ED982A742FB600895A97 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = swox;
+			productName = swox;
+			productReference = 1191ED9A2A742FB600895A97 /* swox */;
+			productType = "com.apple.product-type.tool";
+		};
+		1191EDC12A74318700895A97 /* SwoxLib */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1191EDC62A74318700895A97 /* Build configuration list for PBXNativeTarget "SwoxLib" */;
+			buildPhases = (
+				1191EDBD2A74318700895A97 /* Headers */,
+				1191EDBE2A74318700895A97 /* Sources */,
+				1191EDBF2A74318700895A97 /* Frameworks */,
+				1191EDC02A74318700895A97 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = SwoxLib;
+			productName = SwoxLib;
+			productReference = 1191EDC22A74318700895A97 /* SwoxLib.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		116AEE4B2A71A64800FB94F1 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1430;
+				LastUpgradeCheck = 1430;
+				TargetAttributes = {
+					1191ED992A742FB600895A97 = {
+						CreatedOnToolsVersion = 14.3.1;
+					};
+					1191EDC12A74318700895A97 = {
+						CreatedOnToolsVersion = 14.3.1;
+					};
+				};
+			};
+			buildConfigurationList = 116AEE4E2A71A64800FB94F1 /* Build configuration list for PBXProject "Swox" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 116AEE4A2A71A64800FB94F1;
+			productRefGroup = 116AEE542A71A64800FB94F1 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				1191ED992A742FB600895A97 /* swox */,
+				1191EDC12A74318700895A97 /* SwoxLib */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		1191EDC02A74318700895A97 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		1191ED962A742FB600895A97 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1191EDAC2A74306F00895A97 /* main.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1191EDBE2A74318700895A97 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1191EDDF2A7433B000895A97 /* SwoxSocks5Session.swift in Sources */,
+				1191EDDD2A7433B000895A97 /* Socks5Address.swift in Sources */,
+				1191EDDC2A7433B000895A97 /* CommonMessages.swift in Sources */,
+				1191EDD92A7433B000895A97 /* SwoxSocks5Server.swift in Sources */,
+				1191EDE02A7433B000895A97 /* SwoxSocks5UDPRelaySession.swift in Sources */,
+				1191EDDA2A7433B000895A97 /* SwoxSessionFactory.swift in Sources */,
+				1191EDDB2A7433B000895A97 /* SwoxSocks5TCPSession.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		116AEE582A71A64800FB94F1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 13.3;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		116AEE592A71A64800FB94F1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 13.3;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+			};
+			name = Release;
+		};
+		1191ED9F2A742FB700895A97 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_HARDENED_RUNTIME = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		1191EDA02A742FB700895A97 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_HARDENED_RUNTIME = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		1191EDC72A74318700895A97 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = "";
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = (
+					"@executable_path/../Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MARKETING_VERSION = 1.0;
+				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++20";
+				PRODUCT_BUNDLE_IDENTIFIER = com.kahoyeung.SwoxLib;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = auto;
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		1191EDC82A74318700895A97 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = "";
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = (
+					"@executable_path/../Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MARKETING_VERSION = 1.0;
+				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++20";
+				PRODUCT_BUNDLE_IDENTIFIER = com.kahoyeung.SwoxLib;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = auto;
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		116AEE4E2A71A64800FB94F1 /* Build configuration list for PBXProject "Swox" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				116AEE582A71A64800FB94F1 /* Debug */,
+				116AEE592A71A64800FB94F1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		1191ED9E2A742FB700895A97 /* Build configuration list for PBXNativeTarget "swox" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1191ED9F2A742FB700895A97 /* Debug */,
+				1191EDA02A742FB700895A97 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		1191EDC62A74318700895A97 /* Build configuration list for PBXNativeTarget "SwoxLib" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1191EDC72A74318700895A97 /* Debug */,
+				1191EDC82A74318700895A97 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 116AEE4B2A71A64800FB94F1 /* Project object */;
+}
