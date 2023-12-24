@@ -21,14 +21,14 @@ var port: UInt16 = 1080
 let args = CommandLine.arguments
 
 for i in args.indices {
-  if args[i] == "-p", i < args.count - 1 {
-    guard let overridePort = UInt16(args[i + 1]) else {
-      print("'\(args[i + 1])'is not a valid port number")
-      break
+    if args[i] == "-p", i < args.count - 1 {
+        guard let overridePort = UInt16(args[i + 1]) else {
+            print("'\(args[i + 1])'is not a valid port number")
+            break
+        }
+        port = overridePort
+        break
     }
-    port = overridePort
-    break
-  }
 }
 
 print("Starting Swox on port \(port)")

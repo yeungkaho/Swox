@@ -16,21 +16,21 @@ protocol SwoxSocks5UDPRelaySessionDelegate: AnyObject {
 }
 
 class SwoxSocks5UDPRelaySession: SwoxSocks5Session {
-  
-  let incomingEndpoint: NWEndpoint
-  weak var delegate: SwoxSocks5UDPRelaySessionDelegate?
-  
-  override init(inConnection: NWConnection, queue: DispatchQueue) {
-    incomingEndpoint = inConnection.endpoint
-    super.init(inConnection: inConnection, queue: queue)
-  }
-  
-  override func connectionCancelled() {
-    cleanup()
-  }
-  
-  private func cleanup() {
-    delegate?.session(didEnd: self)
-    delegate = nil
-  }
+    
+    let incomingEndpoint: NWEndpoint
+    weak var delegate: SwoxSocks5UDPRelaySessionDelegate?
+    
+    override init(inConnection: NWConnection, queue: DispatchQueue) {
+        incomingEndpoint = inConnection.endpoint
+        super.init(inConnection: inConnection, queue: queue)
+    }
+    
+    override func connectionCancelled() {
+        cleanup()
+    }
+    
+    private func cleanup() {
+        delegate?.session(didEnd: self)
+        delegate = nil
+    }
 }
