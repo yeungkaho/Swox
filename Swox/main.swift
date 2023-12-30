@@ -35,6 +35,7 @@ for arg in CommandLine.arguments {
             state = .expectingPortNumber
         case "-f":
             tfoEnabled = true
+            print("TCP Fast Open enabled")
         default:
             print("invalid argument: \(arg)")
             continue
@@ -45,11 +46,11 @@ for arg in CommandLine.arguments {
             exit(1)
         }
         port = overridePort
+        state = .searching
     }
 }
 
 print("Starting Swox on port \(port)...")
-print("TCP Fast Open enabled: \(tfoEnabled)")
 
 let server = try! SwoxSocks5Server(port: port, tcpFastOpen: tfoEnabled)
 server.start()

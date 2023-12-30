@@ -9,12 +9,11 @@ import Foundation
 import Network
 
 public class SwoxSocks5Server: SwoxSocks5TCPSessionDelegate, SwoxSocks5UDPRelaySessionDelegate {
+    
     enum Socks5ServerError: Error {
         case invalidPortNumber
     }
-    enum ConnectionSortResult {
-        
-    }
+    
     let listenQueue = DispatchQueue(label: "Swox.Socks5.Listen", qos: .default, attributes: .concurrent, autoreleaseFrequency: .workItem)
     let sessionsQueue = DispatchQueue(label: "Swox.Socks5.Sessions", qos: .userInteractive, autoreleaseFrequency: .workItem)
     let listener: NWListener
@@ -24,7 +23,12 @@ public class SwoxSocks5Server: SwoxSocks5TCPSessionDelegate, SwoxSocks5UDPRelayS
     var tcpSessions = Set<SwoxSocks5TCPSession>()
     var udpRelaySessions = Set<SwoxSocks5UDPRelaySession>()
     
-    public init(port: UInt16, tcpFastOpen: Bool = true, tcpKeepAlive: Bool = true, tcpNoDelay: Bool = true) throws {
+    public init(
+        port: UInt16,
+        tcpFastOpen: Bool = false,
+        tcpKeepAlive: Bool = false,
+        tcpNoDelay: Bool = true) throws 
+    {
         guard let port = NWEndpoint.Port(rawValue: port) else {
             throw Socks5ServerError.invalidPortNumber
         }
@@ -33,9 +37,6 @@ public class SwoxSocks5Server: SwoxSocks5TCPSessionDelegate, SwoxSocks5UDPRelayS
         tcpOptions.enableFastOpen = tcpFastOpen
         if tcpKeepAlive {
             tcpOptions.enableKeepalive = true
-            tcpOptions.keepaliveIdle = 2
-            tcpOptions.keepaliveCount = 2
-            tcpOptions.keepaliveInterval = 2
         }
         tcpOptions.noDelay = tcpNoDelay
         tcpOptions.connectionTimeout = 10
@@ -69,7 +70,7 @@ public class SwoxSocks5Server: SwoxSocks5TCPSessionDelegate, SwoxSocks5UDPRelayS
                 case .udpRelay(let udpSession):
                     udpSession.delegate = self
                     self.udpRelaySessions.insert(udpSession)
-                    //TODO: UDP relay
+                    udpSession.start()
                 }
             case .failure(let error):
                 newConnection.cancel()

@@ -18,6 +18,7 @@ class SwoxSessionFactory {
         case failed(Error),
              cancelled,
              handshakeFailed,
+             failedToInitializeSession,
              failedToReadFromConnection,
              unsupportedAuthenticationMethod,
              unsupportedSocksVersion,
@@ -93,7 +94,11 @@ class SwoxSessionFactory {
                             let command = content[1]
                             switch command {
                             case 1: // TCP
-                                completion(.success(.tcp(.init(inConnection: inConnection, queue: self.queue))))
+                                do {
+                                    completion(.success(.tcp(try .init(inConnection: inConnection, queue: self.queue))))
+                                } catch {
+                                    completion(.failure(.failedToInitializeSession))
+                                }
                                 return
                             case 2: // BIND
                                 inConnection.send(content: .socks5UnsupportedCommand, completion: .contentProcessed({ error in
@@ -101,7 +106,11 @@ class SwoxSessionFactory {
                                 }))
                                 return
                             case 3: // UDP ASSOCIATE
-                                completion(.success(.udpRelay(.init(inConnection: inConnection, queue: self.queue))))
+                                do {
+                                    completion(.success(.udpRelay(try .init(inConnection: inConnection, queue: self.queue))))
+                                } catch {
+                                    completion(.failure(.failedToInitializeSession))
+                                }
                                 return
                             default: // UNKNOWN CMD
                                 inConnection.send(content: .socks5UnsupportedCommand, completion: .contentProcessed({ error in

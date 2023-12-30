@@ -34,15 +34,18 @@ class SwoxSocks5TCPSession: SwoxSocks5Session {
     private var outConnection: NWConnection!
     private var state: State = .readingRequest
     
-    override init(inConnection: NWConnection, queue: DispatchQueue) {
-        super.init(inConnection: inConnection, queue: queue)
+    override init(inConnection: NWConnection, queue: DispatchQueue) throws {
+        try super.init(inConnection: inConnection, queue: queue)
     }
     
     func start() {
         guard state == .readingRequest else {
             fatalError("should not call start now")
         }
-        inConnection.receive(minimumIncompleteLength: 5, maximumLength: maximumReadLength) { [unowned self] content, contentContext, isComplete, error in
+        inConnection.receive(
+            minimumIncompleteLength: 5,
+            maximumLength: maximumReadLength
+        ) { [unowned self] content, contentContext, isComplete, error in
             // read addr type byte
             guard let content = content, let sockAddr = Socks5Address(data: content) else {
                 self.cleanup()
@@ -51,7 +54,7 @@ class SwoxSocks5TCPSession: SwoxSocks5Session {
             
             let endpoint = NWEndpoint.hostPort(host: sockAddr.host, port: sockAddr.port)
             self.outConnection = .init(to: endpoint, using: Self.tcpParams)
-            self.outConnection.stateUpdateHandler = self.outConnectionStateUpdateHandler
+            self.outConnection.stateUpdateHandler = self.handleOutConnectionStateUpdate
             self.outConnection.start(queue: queue)
             
         }
@@ -103,7 +106,7 @@ class SwoxSocks5TCPSession: SwoxSocks5Session {
         }
     }
     
-    private func outConnectionStateUpdateHandler(newState: NWConnection.State) {
+    private func handleOutConnectionStateUpdate(newState: NWConnection.State) {
         switch newState {
         case .setup:
             print("State of out connection to \(outConnection.endpoint): setup")

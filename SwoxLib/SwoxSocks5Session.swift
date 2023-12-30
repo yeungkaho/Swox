@@ -13,7 +13,7 @@ class SwoxSocks5Session {
     let inConnection: NWConnection
     let queue: DispatchQueue
     
-    init(inConnection: NWConnection, queue: DispatchQueue) {
+    init(inConnection: NWConnection, queue: DispatchQueue) throws {
         self.queue = queue
         self.inConnection = inConnection
         self.inConnection.stateUpdateHandler = inConnectionStateUpdateHandler(newState:)

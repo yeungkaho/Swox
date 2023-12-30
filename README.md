@@ -1,7 +1,25 @@
 # Swox
-A Socks5 proxy server written in Swift. Can be used as a commandline tool or a library.
+A Socks5 proxy server written in Swift.
 
-Things that don't work yet, may add in the (probably distant) future:
+TCP connection and UDP ASSOCIATE are working now.
+
+Not implemented
+====
 - Socks authentication
-- UDP ASSOCIATE
-- BIND
+- UDP Fragmentation(probably not going to add)
+- BIND(probably not going to add)
+
+TODO
+====
+- Username/password authentication
+- A cleaner logging solution (Dependency injection friendly, protocol + default built-in implementation)
+- Packet sniffing
+- Custom DNS server
+- Unit Tests
+
+Example
+====
+Use arg "-p" for a different port number, "-f" to enable TCP Fast Open
+```
+Swox -f -p 1088
+```

@@ -17,6 +17,7 @@
 		1191EDDD2A7433B000895A97 /* Socks5Address.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1191ED942A741E4500895A97 /* Socks5Address.swift */; };
 		1191EDDF2A7433B000895A97 /* SwoxSocks5Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1191ED922A7417C200895A97 /* SwoxSocks5Session.swift */; };
 		1191EDE02A7433B000895A97 /* SwoxSocks5UDPRelaySession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1191ED8A2A73F95500895A97 /* SwoxSocks5UDPRelaySession.swift */; };
+		F3A9949A2B402418007A3C0C /* Socks5UDPDatagram.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3A994992B402418007A3C0C /* Socks5UDPDatagram.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -43,6 +44,7 @@
 		1191EDAA2A74305E00895A97 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		1191EDC22A74318700895A97 /* SwoxLib.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SwoxLib.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1191EDC42A74318700895A97 /* SwoxLib.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SwoxLib.h; sourceTree = "<group>"; };
+		F3A994992B402418007A3C0C /* Socks5UDPDatagram.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Socks5UDPDatagram.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -108,6 +110,7 @@
 				1191ED922A7417C200895A97 /* SwoxSocks5Session.swift */,
 				1191ED882A73F8B900895A97 /* SwoxSocks5TCPSession.swift */,
 				1191ED8A2A73F95500895A97 /* SwoxSocks5UDPRelaySession.swift */,
+				F3A994992B402418007A3C0C /* Socks5UDPDatagram.swift */,
 				1191ED8C2A73FA7F00895A97 /* SwoxSessionFactory.swift */,
 				1191EDC42A74318700895A97 /* SwoxLib.h */,
 			);
@@ -234,6 +237,7 @@
 				1191EDDD2A7433B000895A97 /* Socks5Address.swift in Sources */,
 				1191EDDC2A7433B000895A97 /* CommonMessages.swift in Sources */,
 				1191EDD92A7433B000895A97 /* SwoxSocks5Server.swift in Sources */,
+				F3A9949A2B402418007A3C0C /* Socks5UDPDatagram.swift in Sources */,
 				1191EDE02A7433B000895A97 /* SwoxSocks5UDPRelaySession.swift in Sources */,
 				1191EDDA2A7433B000895A97 /* SwoxSessionFactory.swift in Sources */,
 				1191EDDB2A7433B000895A97 /* SwoxSocks5TCPSession.swift in Sources */,
@@ -402,7 +406,7 @@
 					"@loader_path/Frameworks",
 				);
 				MACH_O_TYPE = staticlib;
-				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				MARKETING_VERSION = 1.0;
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++20";
@@ -410,10 +414,12 @@
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SDKROOT = auto;
 				SKIP_INSTALL = YES;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTED_PLATFORMS = "appletvos appletvsimulator iphoneos iphonesimulator macosx";
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = "1,2,3";
+				TVOS_DEPLOYMENT_TARGET = 15.0;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
@@ -443,7 +449,7 @@
 					"@loader_path/Frameworks",
 				);
 				MACH_O_TYPE = staticlib;
-				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				MARKETING_VERSION = 1.0;
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++20";
@@ -451,10 +457,12 @@
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SDKROOT = auto;
 				SKIP_INSTALL = YES;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTED_PLATFORMS = "appletvos appletvsimulator iphoneos iphonesimulator macosx";
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = "1,2,3";
+				TVOS_DEPLOYMENT_TARGET = 15.0;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
