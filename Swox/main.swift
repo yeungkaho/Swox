@@ -27,7 +27,9 @@ enum ArgParsingState {
 
 var state = ArgParsingState.searching
 
-for arg in CommandLine.arguments {
+                                // exclude the first argument which is the program name
+for arg in CommandLine.arguments[1 ..< CommandLine.arguments.count] {
+    
     switch state {
     case .searching:
         switch arg {
@@ -52,7 +54,7 @@ for arg in CommandLine.arguments {
 
 print("Starting Swox on port \(port)...")
 
-let server = try! SwoxSocks5Server(port: port, tcpFastOpen: tfoEnabled)
+let server = try! SwoxProxyServer(port: port, tcpFastOpen: tfoEnabled, logger: ConsolePrinterLogger(level: .info))
 server.start()
 
 RunLoop.main.run()

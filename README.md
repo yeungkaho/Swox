@@ -1,7 +1,7 @@
 # Swox
-A Socks5 proxy server written in Swift.
+A proxy server written in Swift.
 
-TCP connection and UDP ASSOCIATE are working now.
+Socks5 TCP connection and UDP ASSOCIATE are working now.
 
 Not implemented
 ====
@@ -12,14 +12,18 @@ Not implemented
 TODO
 ====
 - Username/password authentication
-- A cleaner logging solution (Dependency injection friendly, protocol + default built-in implementation)
 - Packet sniffing
 - Custom DNS server
 - Unit Tests
+- HTTP proxy
 
 Example
 ====
 Use arg "-p" for a different port number, "-f" to enable TCP Fast Open
 ```
+#start with default config on port 1080
+Swox
+
+#start on port 1088 with TCP fast open enabled
 Swox -f -p 1088
 ```

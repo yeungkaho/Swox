@@ -57,13 +57,13 @@ struct Socks5UDPDatagram {
         }
         switch addressType { // Address Type
         case .ipV4:
-            guard let parsed = Socks5Address(data: Data(data[3 ..< 10])) else {
+            guard let parsed = try? Socks5Address(data: Data(data[3 ..< 10])) else {
                 return nil
             }
             address = parsed
             payload = Data(data[10 ..< data.count])
         case .ipv6:
-            guard let parsed = Socks5Address(data: Data(data[3 ..< 22])) else {
+            guard let parsed = try? Socks5Address(data: Data(data[3 ..< 22])) else {
                 return nil
             }
             address = parsed
@@ -73,7 +73,7 @@ struct Socks5UDPDatagram {
             // total length of address
             // = 1(ATYP) + 1(first byte is domain length) + domainLength + 2(port)
             // = 4 + domainLength
-            guard let parsed = Socks5Address(data: Data(data[3 ..< (7 + domainLength)])) else {
+            guard let parsed = try? Socks5Address(data: Data(data[3 ..< (7 + domainLength)])) else {
                 return nil
             }
             address = parsed

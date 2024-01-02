@@ -12,7 +12,7 @@ protocol SwoxSocks5UDPRelaySessionDelegate: AnyObject {
     func session(didEnd session: SwoxSocks5UDPRelaySession)
 }
 
-class SwoxSocks5UDPRelaySession: SwoxSocks5Session {
+class SwoxSocks5UDPRelaySession: SwoxProxySession {
     
     enum State {
         case readingRequest, outUDPConnected, inUDPListenerReady, waitingForInUDPConnection, transmitting, ended
@@ -28,10 +28,10 @@ class SwoxSocks5UDPRelaySession: SwoxSocks5Session {
     var outSocksAddr: Socks5Address!
     private var state: State = .readingRequest
     
-    override init(inConnection: NWConnection, queue: DispatchQueue) throws {
+    override init(sessionID: Int, inConnection: NWConnection, queue: DispatchQueue, logger: Logger) throws {
         incomingEndpoint = inConnection.endpoint
         inUDPListener = try NWListener(using: .udp)
-        try super.init(inConnection: inConnection, queue: queue)
+        try super.init(sessionID: sessionID, inConnection: inConnection, queue: queue, logger: logger)
     }
     
     /**
@@ -51,18 +51,26 @@ class SwoxSocks5UDPRelaySession: SwoxSocks5Session {
             maximumLength: 8192
         ) { [unowned self] content, contentContext, isComplete, error in
             // read addr type byte
-            guard let content = content, let socksAddr = Socks5Address(data: content) else {
-                print("")
+            guard let content = content else {
                 self.cleanup()
                 return
             }
-            outSocksAddr = socksAddr
-            let endpoint = NWEndpoint.hostPort(host: socksAddr.host, port: socksAddr.port)
-            self.outEndpoint = endpoint
-            
-            self.outUDPConnection = .init(to: endpoint, using: .udp)
-            self.outUDPConnection.stateUpdateHandler = self.handleOutUDPConnectionStateUpdate
-            self.outUDPConnection.start(queue: self.queue)
+            do {
+                let socksAddr = try Socks5Address(data: content)
+                
+                outSocksAddr = socksAddr
+                let endpoint = NWEndpoint.hostPort(host: socksAddr.host, port: socksAddr.port)
+                self.outEndpoint = endpoint
+                
+                self.outUDPConnection = .init(to: endpoint, using: .udp)
+                self.outUDPConnection.stateUpdateHandler = self.handleOutUDPConnectionStateUpdate
+                self.outUDPConnection.start(queue: self.queue)
+                
+            } catch let e {
+                self.logger.error(e)
+                self.cleanup()
+                return
+            }
         }
     }
     
@@ -74,7 +82,7 @@ class SwoxSocks5UDPRelaySession: SwoxSocks5Session {
             inUDPListener.stateUpdateHandler = handleInListenerStateUpdate
             inUDPListener.start(queue: queue)
         case .failed(let error):
-            print("UDP Associate failed to establish udp connection to remote endpoint: " + error.localizedDescription)
+            logger.error("[Socks5 UDP] Failed to establish udp connection to remote endpoint: " + error.localizedDescription)
             cleanup()
         case .cancelled:
             cleanup()
@@ -89,21 +97,22 @@ class SwoxSocks5UDPRelaySession: SwoxSocks5Session {
         case .cancelled:
             cleanup()
         case .failed(let error):
-            print(error)
+            logger.error("[Socks5 UDP] In UDP listener failed with error: " + error.localizedDescription)
         case .ready:
             guard let port = inUDPListener.port, port.rawValue > 0 else {
                 // system did not allocate a valid port number for in udp listener
+                logger.error("[Socks5 UDP] Failed to bind port for UDP listener ")
                 cleanup()
                 return
             }
             state = .inUDPListenerReady
-            print("UDP Associate initialized on port \(port.rawValue)")
+            logger.info("[Socks5 UDP] initialized on port \(port.rawValue) from \(inConnection.endpoint) to \(outEndpoint!)")
             guard let successMessage = makeSuccessMessage() else {
                 return
             }
             inConnection.send(content: successMessage, completion: .contentProcessed({ [weak self] error in
                 if let error = error {
-                    print("Failed to send reply for UDP ASSOCIATE: " + error.localizedDescription)
+                    self?.logger.error("[Socks5 UDP] Failed to send reply for UDP ASSOCIATE: " + error.localizedDescription)
                     self?.cleanup()
                     return
                 }
@@ -143,7 +152,7 @@ class SwoxSocks5UDPRelaySession: SwoxSocks5Session {
     }
     
     private func handleNewInConnection(_ connection: NWConnection) {
-        print("got new udp connection from \(connection.endpoint)")
+        logger.trace("[Socks5 UDP] got new udp connection from \(connection.endpoint)")
         inUDPConnection = connection
         inUDPConnection.start(queue: queue)
         self.state = .transmitting
@@ -161,16 +170,12 @@ class SwoxSocks5UDPRelaySession: SwoxSocks5Session {
             guard let self = self, let data = content, !data.isEmpty else {
                 return
             }
-            
-            // unwrap datagram and send to out udp
-            print("received data from in udp: \(data)")
-            
             if let datagram = Socks5UDPDatagram(data: data) {
                 outUDPConnection.send(content: datagram.payload, completion: .contentProcessed({ error in
                     if let error = error {
-                        print("failed to send udp datagram to remote: " + error.localizedDescription)
+                        self.logger.error("[Socks5 UDP] failed to send udp datagram to remote: " + error.localizedDescription)
                     } else {
-                        print("sent udp packet to remote with size: \(datagram.payload.count)")
+                        self.logger.trace("[Socks5 UDP] sent udp packet to remote with size: \(datagram.payload.count)")
                     }
                 }))
             }
@@ -190,14 +195,14 @@ class SwoxSocks5UDPRelaySession: SwoxSocks5Session {
             }
             
             // received udp packet from remote, wrap it in a Socks5UDPDatagram and send back to in udp
-            print("received data from out udp: \(data)")
+            self.logger.trace("[Socks5 UDP] received data from out udp: \(data)")
             
             let datagram = Socks5UDPDatagram(address: outSocksAddr, payload: data)
             inUDPConnection.send(content: datagram.data(), completion: .contentProcessed({ error in
                 if let error = error {
-                    print("failed to send udp datagram from remote " + error.localizedDescription)
+                    self.logger.error("[Socks5 UDP] failed to send udp datagram from remote " + error.localizedDescription)
                 } else {
-                    print("sent udp packet back to client with size: \(datagram.payload.count)")
+                    self.logger.trace("[Socks5 UDP] sent udp packet back to client with size: \(datagram.payload.count)")
                 }
             }))
             
@@ -213,8 +218,8 @@ class SwoxSocks5UDPRelaySession: SwoxSocks5Session {
         delegate?.session(didEnd: self)
         delegate = nil
         inUDPListener.cancel()
-        inConnection.cancel()
-        outUDPConnection?.cancel()
-        inUDPConnection?.cancel()
+        inConnection.tryCancel()
+        outUDPConnection?.tryCancel()
+        inUDPConnection?.tryCancel()
     }
 }

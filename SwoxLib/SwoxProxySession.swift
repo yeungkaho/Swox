@@ -1,5 +1,5 @@
 //
-//  SwoxSocks5Session.swift
+//  SwoxProxySession.swift
 //  Swox
 //
 //  Created by kaho on 28/07/2023.
@@ -8,14 +8,18 @@
 import Foundation
 import Network
 
-class SwoxSocks5Session {
+class SwoxProxySession {
     
     let inConnection: NWConnection
     let queue: DispatchQueue
+    let sessionID: Int
+    let logger: Logger
     
-    init(inConnection: NWConnection, queue: DispatchQueue) throws {
+    init(sessionID: Int, inConnection: NWConnection, queue: DispatchQueue, logger: Logger) throws {
+        self.sessionID = sessionID
         self.queue = queue
         self.inConnection = inConnection
+        self.logger = logger
         self.inConnection.stateUpdateHandler = inConnectionStateUpdateHandler(newState:)
     }
     
@@ -34,11 +38,11 @@ class SwoxSocks5Session {
     
 }
 
-extension SwoxSocks5Session: Hashable {
-    static func == (lhs: SwoxSocks5Session, rhs: SwoxSocks5Session) -> Bool {
-        lhs.inConnection.endpoint == rhs.inConnection.endpoint
+extension SwoxProxySession: Hashable {
+    static func == (lhs: SwoxProxySession, rhs: SwoxProxySession) -> Bool {
+        lhs.sessionID == rhs.sessionID
     }
     func hash(into hasher: inout Hasher) {
-        hasher.combine(inConnection.endpoint.hashValue)
+        hasher.combine(sessionID.hashValue)
     }
 }

@@ -10,14 +10,19 @@
 		1191EDAC2A74306F00895A97 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1191EDAA2A74305E00895A97 /* main.swift */; };
 		1191EDC52A74318700895A97 /* SwoxLib.h in Headers */ = {isa = PBXBuildFile; fileRef = 1191EDC42A74318700895A97 /* SwoxLib.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1191EDD22A74337E00895A97 /* SwoxLib.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1191EDC22A74318700895A97 /* SwoxLib.framework */; };
-		1191EDD92A7433B000895A97 /* SwoxSocks5Server.swift in Sources */ = {isa = PBXBuildFile; fileRef = 116AEE5D2A71A69200FB94F1 /* SwoxSocks5Server.swift */; };
+		1191EDD92A7433B000895A97 /* SwoxProxyServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 116AEE5D2A71A69200FB94F1 /* SwoxProxyServer.swift */; };
 		1191EDDA2A7433B000895A97 /* SwoxSessionFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1191ED8C2A73FA7F00895A97 /* SwoxSessionFactory.swift */; };
 		1191EDDB2A7433B000895A97 /* SwoxSocks5TCPSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1191ED882A73F8B900895A97 /* SwoxSocks5TCPSession.swift */; };
 		1191EDDC2A7433B000895A97 /* CommonMessages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1191ED862A73F82000895A97 /* CommonMessages.swift */; };
 		1191EDDD2A7433B000895A97 /* Socks5Address.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1191ED942A741E4500895A97 /* Socks5Address.swift */; };
-		1191EDDF2A7433B000895A97 /* SwoxSocks5Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1191ED922A7417C200895A97 /* SwoxSocks5Session.swift */; };
+		1191EDDF2A7433B000895A97 /* SwoxProxySession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1191ED922A7417C200895A97 /* SwoxProxySession.swift */; };
 		1191EDE02A7433B000895A97 /* SwoxSocks5UDPRelaySession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1191ED8A2A73F95500895A97 /* SwoxSocks5UDPRelaySession.swift */; };
 		F3A9949A2B402418007A3C0C /* Socks5UDPDatagram.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3A994992B402418007A3C0C /* Socks5UDPDatagram.swift */; };
+		F3A9949E2B4425F8007A3C0C /* SwoxHTTPProxySession.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3A9949D2B4425F8007A3C0C /* SwoxHTTPProxySession.swift */; };
+		F3A994A12B442EAE007A3C0C /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3A994A02B442EAE007A3C0C /* Logger.swift */; };
+		F3A994A32B44328B007A3C0C /* ConsolePrinterLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3A994A22B44328B007A3C0C /* ConsolePrinterLogger.swift */; };
+		F3A994A52B443E37007A3C0C /* HTTPHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3A994A42B443E37007A3C0C /* HTTPHeader.swift */; };
+		F3A994A72B444AE3007A3C0C /* Network+.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3A994A62B444AE3007A3C0C /* Network+.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -33,18 +38,23 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		116AEE5D2A71A69200FB94F1 /* SwoxSocks5Server.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwoxSocks5Server.swift; sourceTree = "<group>"; };
+		116AEE5D2A71A69200FB94F1 /* SwoxProxyServer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwoxProxyServer.swift; sourceTree = "<group>"; };
 		1191ED862A73F82000895A97 /* CommonMessages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonMessages.swift; sourceTree = "<group>"; };
 		1191ED882A73F8B900895A97 /* SwoxSocks5TCPSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwoxSocks5TCPSession.swift; sourceTree = "<group>"; };
 		1191ED8A2A73F95500895A97 /* SwoxSocks5UDPRelaySession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwoxSocks5UDPRelaySession.swift; sourceTree = "<group>"; };
 		1191ED8C2A73FA7F00895A97 /* SwoxSessionFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwoxSessionFactory.swift; sourceTree = "<group>"; };
-		1191ED922A7417C200895A97 /* SwoxSocks5Session.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwoxSocks5Session.swift; sourceTree = "<group>"; };
+		1191ED922A7417C200895A97 /* SwoxProxySession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwoxProxySession.swift; sourceTree = "<group>"; };
 		1191ED942A741E4500895A97 /* Socks5Address.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Socks5Address.swift; sourceTree = "<group>"; };
 		1191ED9A2A742FB600895A97 /* swox */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = swox; sourceTree = BUILT_PRODUCTS_DIR; };
 		1191EDAA2A74305E00895A97 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		1191EDC22A74318700895A97 /* SwoxLib.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SwoxLib.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1191EDC42A74318700895A97 /* SwoxLib.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SwoxLib.h; sourceTree = "<group>"; };
 		F3A994992B402418007A3C0C /* Socks5UDPDatagram.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Socks5UDPDatagram.swift; sourceTree = "<group>"; };
+		F3A9949D2B4425F8007A3C0C /* SwoxHTTPProxySession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwoxHTTPProxySession.swift; sourceTree = "<group>"; };
+		F3A994A02B442EAE007A3C0C /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
+		F3A994A22B44328B007A3C0C /* ConsolePrinterLogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsolePrinterLogger.swift; sourceTree = "<group>"; };
+		F3A994A42B443E37007A3C0C /* HTTPHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPHeader.swift; sourceTree = "<group>"; };
+		F3A994A62B444AE3007A3C0C /* Network+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Network+.swift"; path = "SwoxLib/Utils/Network+.swift"; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -105,13 +115,16 @@
 		1191EDC32A74318700895A97 /* SwoxLib */ = {
 			isa = PBXGroup;
 			children = (
+				F3A9949F2B442E8B007A3C0C /* Logging */,
 				1191ED8F2A740DBE00895A97 /* Utils */,
-				116AEE5D2A71A69200FB94F1 /* SwoxSocks5Server.swift */,
-				1191ED922A7417C200895A97 /* SwoxSocks5Session.swift */,
+				116AEE5D2A71A69200FB94F1 /* SwoxProxyServer.swift */,
+				1191ED922A7417C200895A97 /* SwoxProxySession.swift */,
 				1191ED882A73F8B900895A97 /* SwoxSocks5TCPSession.swift */,
 				1191ED8A2A73F95500895A97 /* SwoxSocks5UDPRelaySession.swift */,
 				F3A994992B402418007A3C0C /* Socks5UDPDatagram.swift */,
 				1191ED8C2A73FA7F00895A97 /* SwoxSessionFactory.swift */,
+				F3A9949D2B4425F8007A3C0C /* SwoxHTTPProxySession.swift */,
+				F3A994A42B443E37007A3C0C /* HTTPHeader.swift */,
 				1191EDC42A74318700895A97 /* SwoxLib.h */,
 			);
 			path = SwoxLib;
@@ -122,6 +135,16 @@
 			children = (
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		F3A9949F2B442E8B007A3C0C /* Logging */ = {
+			isa = PBXGroup;
+			children = (
+				F3A994A02B442EAE007A3C0C /* Logger.swift */,
+				F3A994A22B44328B007A3C0C /* ConsolePrinterLogger.swift */,
+				F3A994A62B444AE3007A3C0C /* Network+.swift */,
+			);
+			path = Logging;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -233,14 +256,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1191EDDF2A7433B000895A97 /* SwoxSocks5Session.swift in Sources */,
+				F3A994A52B443E37007A3C0C /* HTTPHeader.swift in Sources */,
+				F3A994A32B44328B007A3C0C /* ConsolePrinterLogger.swift in Sources */,
+				F3A994A72B444AE3007A3C0C /* Network+.swift in Sources */,
+				1191EDDF2A7433B000895A97 /* SwoxProxySession.swift in Sources */,
+				F3A994A12B442EAE007A3C0C /* Logger.swift in Sources */,
 				1191EDDD2A7433B000895A97 /* Socks5Address.swift in Sources */,
 				1191EDDC2A7433B000895A97 /* CommonMessages.swift in Sources */,
-				1191EDD92A7433B000895A97 /* SwoxSocks5Server.swift in Sources */,
+				1191EDD92A7433B000895A97 /* SwoxProxyServer.swift in Sources */,
 				F3A9949A2B402418007A3C0C /* Socks5UDPDatagram.swift in Sources */,
 				1191EDE02A7433B000895A97 /* SwoxSocks5UDPRelaySession.swift in Sources */,
 				1191EDDA2A7433B000895A97 /* SwoxSessionFactory.swift in Sources */,
 				1191EDDB2A7433B000895A97 /* SwoxSocks5TCPSession.swift in Sources */,
+				F3A9949E2B4425F8007A3C0C /* SwoxHTTPProxySession.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

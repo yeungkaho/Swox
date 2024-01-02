@@ -8,7 +8,7 @@
 import Foundation
 import Network
 
-public class SwoxSocks5Server: SwoxSocks5TCPSessionDelegate, SwoxSocks5UDPRelaySessionDelegate {
+public class SwoxProxyServer: SwoxSocks5TCPSessionDelegate, SwoxSocks5UDPRelaySessionDelegate {
     
     enum Socks5ServerError: Error {
         case invalidPortNumber
@@ -20,15 +20,17 @@ public class SwoxSocks5Server: SwoxSocks5TCPSessionDelegate, SwoxSocks5UDPRelayS
     
     let sessionFactory: SwoxSessionFactory
     
-    var tcpSessions = Set<SwoxSocks5TCPSession>()
-    var udpRelaySessions = Set<SwoxSocks5UDPRelaySession>()
+    let logger: Logger
+    
+    var sessions = Set<SwoxProxySession>()
     
     public init(
         port: UInt16,
         tcpFastOpen: Bool = false,
         tcpKeepAlive: Bool = false,
-        tcpNoDelay: Bool = true) throws 
-    {
+        tcpNoDelay: Bool = true,
+        logger: Logger = ConsolePrinterLogger(level: .info)
+    ) throws {
         guard let port = NWEndpoint.Port(rawValue: port) else {
             throw Socks5ServerError.invalidPortNumber
         }
@@ -48,9 +50,12 @@ public class SwoxSocks5Server: SwoxSocks5TCPSessionDelegate, SwoxSocks5UDPRelayS
         params.allowLocalEndpointReuse = true
         
         listener = try NWListener(using: params, on: port)
-        sessionFactory = SwoxSessionFactory(queue: sessionsQueue)
+        sessionFactory = SwoxSessionFactory(queue: sessionsQueue, logger: logger)
+        self.logger = logger
+        
         listener.newConnectionHandler = newConnectionHandler
         listener.stateUpdateHandler = listionerStateeUpdateHandler
+        
     }
     
     public func start() {
@@ -63,27 +68,32 @@ public class SwoxSocks5Server: SwoxSocks5TCPSessionDelegate, SwoxSocks5UDPRelayS
             switch result {
             case .success(let session):
                 switch session {
-                case .tcp(let tcpSession):
-                    tcpSession.delegate = self
-                    self.tcpSessions.insert(tcpSession)
-                    tcpSession.start()
-                case .udpRelay(let udpSession):
-                    udpSession.delegate = self
-                    self.udpRelaySessions.insert(udpSession)
-                    udpSession.start()
+                case .socks5TCP(let socks5TCPSession):
+                    socks5TCPSession.delegate = self
+                    self.sessions.insert(socks5TCPSession)
+                    socks5TCPSession.start()
+                case .socks5UDPRelay(let socks5UDPSession):
+                    socks5UDPSession.delegate = self
+                    self.sessions.insert(socks5UDPSession)
+                    socks5UDPSession.start()
+                case .http(let httpProxySession):
+                    // TODO:
+                    
+                    self.sessions.insert(httpProxySession)
+                    
                 }
             case .failure(let error):
-                newConnection.cancel()
-                print(error)
+                newConnection.tryCancel()
+                self.logger.error(error)
             }
         }
     }
     
     private func listionerStateeUpdateHandler(newState: NWListener.State) {
-        print("NWListener stateDidChange: \(newState)")
+        logger.trace("NWListener stateDidChange: \(newState)")
         switch newState {
         case .failed(let error):
-            print(error.localizedDescription)
+            logger.error(error)
         default:
             break
         }
@@ -91,13 +101,13 @@ public class SwoxSocks5Server: SwoxSocks5TCPSessionDelegate, SwoxSocks5UDPRelayS
     
     func session(didEnd session: SwoxSocks5TCPSession) {
         sessionsQueue.async { [weak self] in
-            self?.tcpSessions.remove(session)
+            self?.sessions.remove(session)
         }
     }
     
     func session(didEnd session: SwoxSocks5UDPRelaySession) {
         sessionsQueue.async { [weak self] in
-            self?.udpRelaySessions.remove(session)
+            self?.sessions.remove(session)
         }
     }
     
