@@ -45,10 +45,10 @@ class SwoxSocks5TCPSession: SwoxProxySession {
         inConnection.receive(
             minimumIncompleteLength: 5,
             maximumLength: maximumReadLength
-        ) { [unowned self] content, contentContext, isComplete, error in
+        ) { [weak self] content, contentContext, isComplete, error in
             // read addr type byte
-            guard let content = content else {
-                self.cleanup()
+            guard let self = self, let content = content else {
+                self?.cleanup()
                 return
             }
             
@@ -56,8 +56,10 @@ class SwoxSocks5TCPSession: SwoxProxySession {
                 let sockAddr = try Socks5Address(data: content)
                 let endpoint = NWEndpoint.hostPort(host: sockAddr.host, port: sockAddr.port)
                 self.outConnection = .init(to: endpoint, using: Self.tcpParams)
-                self.outConnection.stateUpdateHandler = self.handleOutConnectionStateUpdate
-                self.outConnection.start(queue: queue)
+                self.outConnection.stateUpdateHandler = { [weak self] newState in
+                    self?.handleOutConnectionStateUpdate(newState: newState)
+                }
+                self.outConnection.start(queue: self.queue)
             } catch let error {
                 self.logger.error(error)
                 self.cleanup()
@@ -161,5 +163,10 @@ class SwoxSocks5TCPSession: SwoxProxySession {
         outConnection.tryCancel()
         delegate?.session(didEnd: self)
         delegate = nil
+    }
+    
+    deinit {
+        inConnection.tryCancel()
+        outConnection.tryCancel()
     }
 }

@@ -14,8 +14,8 @@ public class SwoxProxyServer: SwoxSocks5TCPSessionDelegate, SwoxSocks5UDPRelaySe
         case invalidPortNumber
     }
     
-    let listenQueue = DispatchQueue(label: "Swox.Socks5.Listen", qos: .default, attributes: .concurrent, autoreleaseFrequency: .workItem)
-    let sessionsQueue = DispatchQueue(label: "Swox.Socks5.Sessions", qos: .userInteractive, autoreleaseFrequency: .workItem)
+    let listenQueue = DispatchQueue(label: "Swox.Listen", qos: .default, attributes: .concurrent, autoreleaseFrequency: .workItem)
+    let sessionsQueue = DispatchQueue(label: "Swox.Sessions", qos: .userInteractive, autoreleaseFrequency: .workItem)
     let listener: NWListener
     
     let sessionFactory: SwoxSessionFactory
@@ -54,12 +54,21 @@ public class SwoxProxyServer: SwoxSocks5TCPSessionDelegate, SwoxSocks5UDPRelaySe
         self.logger = logger
         
         listener.newConnectionHandler = newConnectionHandler
-        listener.stateUpdateHandler = listionerStateeUpdateHandler
+        listener.stateUpdateHandler = { [weak self] newState in
+            self?.handleListenerNewState(newState: newState)
+        }
         
     }
     
     public func start() {
         listener.start(queue: listenQueue)
+    }
+    
+    public func stop() {
+        listener.cancel()
+        sessionsQueue.async { [weak self] in
+            self?.sessions.removeAll()
+        }
     }
     
     private func newConnectionHandler(newConnection: NWConnection) {
@@ -89,7 +98,7 @@ public class SwoxProxyServer: SwoxSocks5TCPSessionDelegate, SwoxSocks5UDPRelaySe
         }
     }
     
-    private func listionerStateeUpdateHandler(newState: NWListener.State) {
+    private func handleListenerNewState(newState: NWListener.State) {
         logger.trace("NWListener stateDidChange: \(newState)")
         switch newState {
         case .failed(let error):

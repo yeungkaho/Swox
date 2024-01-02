@@ -20,7 +20,9 @@ class SwoxProxySession {
         self.queue = queue
         self.inConnection = inConnection
         self.logger = logger
-        self.inConnection.stateUpdateHandler = inConnectionStateUpdateHandler(newState:)
+        self.inConnection.stateUpdateHandler = { [weak self] state in
+            self?.inConnectionStateUpdateHandler(newState: state)
+        }
     }
     
     private func inConnectionStateUpdateHandler(newState: NWConnection.State) {

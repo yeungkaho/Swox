@@ -49,21 +49,23 @@ class SwoxSocks5UDPRelaySession: SwoxProxySession {
         inConnection.receive(
             minimumIncompleteLength: 5,
             maximumLength: 8192
-        ) { [unowned self] content, contentContext, isComplete, error in
+        ) { [weak self] content, contentContext, isComplete, error in
             // read addr type byte
-            guard let content = content else {
-                self.cleanup()
+            guard let self = self, let content = content else {
+                self?.cleanup()
                 return
             }
             do {
                 let socksAddr = try Socks5Address(data: content)
                 
-                outSocksAddr = socksAddr
+                self.outSocksAddr = socksAddr
                 let endpoint = NWEndpoint.hostPort(host: socksAddr.host, port: socksAddr.port)
                 self.outEndpoint = endpoint
                 
                 self.outUDPConnection = .init(to: endpoint, using: .udp)
-                self.outUDPConnection.stateUpdateHandler = self.handleOutUDPConnectionStateUpdate
+                self.outUDPConnection.stateUpdateHandler = { [weak self] newState in
+                    self?.handleOutUDPConnectionStateUpdate(newState)
+                }
                 self.outUDPConnection.start(queue: self.queue)
                 
             } catch let e {
@@ -79,7 +81,9 @@ class SwoxSocks5UDPRelaySession: SwoxProxySession {
         case .ready:
             state = .outUDPConnected
             inUDPListener.newConnectionHandler = handleNewInConnection
-            inUDPListener.stateUpdateHandler = handleInListenerStateUpdate
+            inUDPListener.stateUpdateHandler = { [weak self] newState in
+                self?.handleInListenerStateUpdate(newState)
+            }
             inUDPListener.start(queue: queue)
         case .failed(let error):
             logger.error("[Socks5 UDP] Failed to establish udp connection to remote endpoint: " + error.localizedDescription)
@@ -217,6 +221,13 @@ class SwoxSocks5UDPRelaySession: SwoxProxySession {
         state = .ended
         delegate?.session(didEnd: self)
         delegate = nil
+        inUDPListener.cancel()
+        inConnection.tryCancel()
+        outUDPConnection?.tryCancel()
+        inUDPConnection?.tryCancel()
+    }
+    
+    deinit {
         inUDPListener.cancel()
         inConnection.tryCancel()
         outUDPConnection?.tryCancel()
