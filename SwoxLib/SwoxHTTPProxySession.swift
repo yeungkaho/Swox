@@ -8,7 +8,7 @@
 import Foundation
 import Network
 
-class SwoxHTTPProxySession: SwoxProxySession {
+final class SwoxHTTPProxySession: SwoxProxySession {
     // TODO:
     init(sessionID: Int,
                   inConnection: NWConnection,

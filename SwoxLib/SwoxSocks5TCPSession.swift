@@ -12,7 +12,7 @@ protocol SwoxSocks5TCPSessionDelegate: AnyObject {
     func session(didEnd session: SwoxSocks5TCPSession)
 }
 
-class SwoxSocks5TCPSession: SwoxProxySession {
+final class SwoxSocks5TCPSession: SwoxProxySession {
     
     static let tcpParams: NWParameters = {
         let tcpOptions = NWProtocolTCP.Options()
@@ -70,7 +70,7 @@ class SwoxSocks5TCPSession: SwoxProxySession {
         }
     }
     
-    func inRead() {
+    private func inRead() {
         inConnection.receive(minimumIncompleteLength: 1, maximumLength: maximumReadLength) { [weak self] content, contentContext, isComplete, error in
             guard let self = self else { return }
             if let error = error {
@@ -93,7 +93,7 @@ class SwoxSocks5TCPSession: SwoxProxySession {
         }
     }
     
-    func outRead() {
+    private func outRead() {
         outConnection.receive(minimumIncompleteLength: 1, maximumLength: maximumReadLength) { [weak self] content, contentContext, isComplete, error in
             guard let self = self else { return }
             if let error = error {

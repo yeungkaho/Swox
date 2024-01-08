@@ -12,24 +12,22 @@ protocol SwoxSocks5UDPRelaySessionDelegate: AnyObject {
     func session(didEnd session: SwoxSocks5UDPRelaySession)
 }
 
-class SwoxSocks5UDPRelaySession: SwoxProxySession {
+final class SwoxSocks5UDPRelaySession: SwoxProxySession {
     
-    enum State {
+    private enum State {
         case readingRequest, outUDPConnected, inUDPListenerReady, waitingForInUDPConnection, transmitting, ended
     }
     
-    let incomingEndpoint: NWEndpoint
     weak var delegate: SwoxSocks5UDPRelaySessionDelegate?
     
-    let inUDPListener: NWListener
-    var outUDPConnection: NWConnection!
-    var inUDPConnection: NWConnection!
-    var outEndpoint: NWEndpoint!
-    var outSocksAddr: Socks5Address!
+    private let inUDPListener: NWListener
+    private var outUDPConnection: NWConnection!
+    private var inUDPConnection: NWConnection!
+    private var outEndpoint: NWEndpoint!
+    private var outSocksAddr: Socks5Address!
     private var state: State = .readingRequest
     
     override init(sessionID: Int, inConnection: NWConnection, queue: DispatchQueue, logger: Logger) throws {
-        incomingEndpoint = inConnection.endpoint
         inUDPListener = try NWListener(using: .udp)
         try super.init(sessionID: sessionID, inConnection: inConnection, queue: queue, logger: logger)
     }

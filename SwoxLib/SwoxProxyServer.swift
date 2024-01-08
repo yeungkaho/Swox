@@ -8,14 +8,24 @@
 import Foundation
 import Network
 
-public class SwoxProxyServer: SwoxSocks5TCPSessionDelegate, SwoxSocks5UDPRelaySessionDelegate {
+final public class SwoxProxyServer: SwoxSocks5TCPSessionDelegate, SwoxSocks5UDPRelaySessionDelegate {
     
     enum Socks5ServerError: Error {
         case invalidPortNumber
     }
     
-    let listenQueue = DispatchQueue(label: "Swox.Listen", qos: .default, attributes: .concurrent, autoreleaseFrequency: .workItem)
-    let sessionsQueue = DispatchQueue(label: "Swox.Sessions", qos: .userInteractive, autoreleaseFrequency: .workItem)
+    let listenQueue = DispatchQueue(
+        label: "Swox.Listen",
+        qos: .default,
+        attributes: .concurrent,
+        autoreleaseFrequency: .workItem
+    )
+    let sessionsQueue = DispatchQueue(
+        label: "Swox.Sessions",
+        qos: .userInteractive,
+        attributes: .concurrent,
+        autoreleaseFrequency: .workItem
+    )
     let listener: NWListener
     
     let sessionFactory: SwoxSessionFactory
@@ -73,27 +83,29 @@ public class SwoxProxyServer: SwoxSocks5TCPSessionDelegate, SwoxSocks5UDPRelaySe
     
     private func newConnectionHandler(newConnection: NWConnection) {
         sessionFactory.makeNewSession(inConnection: newConnection) { [weak self] result in
-            guard let self = self else { return }
-            switch result {
-            case .success(let session):
-                switch session {
-                case .socks5TCP(let socks5TCPSession):
-                    socks5TCPSession.delegate = self
-                    self.sessions.insert(socks5TCPSession)
-                    socks5TCPSession.start()
-                case .socks5UDPRelay(let socks5UDPSession):
-                    socks5UDPSession.delegate = self
-                    self.sessions.insert(socks5UDPSession)
-                    socks5UDPSession.start()
-                case .http(let httpProxySession):
-                    // TODO:
-                    
-                    self.sessions.insert(httpProxySession)
-                    
+            self?.sessionsQueue.async(flags: [.barrier])  {
+                guard let self = self else { return }
+                switch result {
+                case .success(let session):
+                    switch session {
+                    case .socks5TCP(let socks5TCPSession):
+                        socks5TCPSession.delegate = self
+                        self.sessions.insert(socks5TCPSession)
+                        socks5TCPSession.start()
+                    case .socks5UDPRelay(let socks5UDPSession):
+                        socks5UDPSession.delegate = self
+                        self.sessions.insert(socks5UDPSession)
+                        socks5UDPSession.start()
+                    case .http(let httpProxySession):
+                        // TODO:
+                        
+                        self.sessions.insert(httpProxySession)
+                        
+                    }
+                case .failure(let error):
+                    newConnection.tryCancel()
+                    self.logger.error(error)
                 }
-            case .failure(let error):
-                newConnection.tryCancel()
-                self.logger.error(error)
             }
         }
     }
@@ -109,13 +121,13 @@ public class SwoxProxyServer: SwoxSocks5TCPSessionDelegate, SwoxSocks5UDPRelaySe
     }
     
     func session(didEnd session: SwoxSocks5TCPSession) {
-        sessionsQueue.async { [weak self] in
+        sessionsQueue.async(flags: [.barrier]) { [weak self] in
             self?.sessions.remove(session)
         }
     }
     
     func session(didEnd session: SwoxSocks5UDPRelaySession) {
-        sessionsQueue.async { [weak self] in
+        sessionsQueue.async(flags: [.barrier]) { [weak self] in
             self?.sessions.remove(session)
         }
     }
