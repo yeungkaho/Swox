@@ -1,21 +1,23 @@
 # Swox
-A proxy server written in Swift.
+A lightweight proxy server written in Swift.  
+The only dependency is Apple's Network framework, for handling TCP and UDP connections.
 
-Socks5 TCP connection and UDP ASSOCIATE are working now.
+Roadmap
+===
+✅ Implemented 👷 WIP 🕒 Likely to add in future 🤔 Less likely to add in future 🤷‍♂️ Not going to happen
+- ✅ SOCKS5 CONNECT 
+- ✅ SOCKS5 UDP ASSOCIATION
+- ✅ Customisable logging
+- ✅ HTTP Proxy
+- 👷 Packet sniffing
+- 🕒 Username/password authentication
+- 🕒 Custom DNS
+- 🕒 Unit Tests
+- 🤔 Linux support(need to replace Network)
+- 🤷‍♂️ Other Socks authentication
+- 🤷‍♂️ UDP Fragmentation in SOCKS5 UDP ASSOCIATION
+- 🤷‍♂️ SOCKS5 BIND
 
-Not implemented
-====
-- Socks authentication
-- UDP Fragmentation(probably not going to add)
-- BIND(probably not going to add)
-
-TODO
-====
-- Username/password authentication
-- Packet sniffing
-- Custom DNS server
-- Unit Tests
-- HTTP proxy
 
 Example
 ====
