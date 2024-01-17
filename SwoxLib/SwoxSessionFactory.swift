@@ -186,7 +186,7 @@ class SwoxSessionFactory {
         // a valid Socks5 handshake request must have a length == 3
         // a valid http header should have a length > 3
         if data.count > 3 {
-            if let httpHeader = HTTPHeader(data: data) {
+            if let httpHeader = try? HTTPHeader(data: data) {
                 return .http(header: httpHeader)
             } else {
                 return .invalid(.contaminatedRequest)

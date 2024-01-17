@@ -8,17 +8,13 @@
 import Foundation
 import Network
 
-protocol SwoxSocks5UDPRelaySessionDelegate: AnyObject {
-    func session(didEnd session: SwoxSocks5UDPRelaySession)
-}
+
 
 final class SwoxSocks5UDPRelaySession: SwoxProxySession {
     
     private enum State {
         case readingRequest, outUDPConnected, inUDPListenerReady, waitingForInUDPConnection, transmitting, ended
     }
-    
-    weak var delegate: SwoxSocks5UDPRelaySessionDelegate?
     
     private let inUDPListener: NWListener
     private var outUDPConnection: NWConnection!
@@ -215,10 +211,9 @@ final class SwoxSocks5UDPRelaySession: SwoxProxySession {
         cleanup()
     }
     
-    private func cleanup() {
+    override func cleanup() {
+        super.cleanup()
         state = .ended
-        delegate?.session(didEnd: self)
-        delegate = nil
         inUDPListener.cancel()
         inConnection.tryCancel()
         outUDPConnection?.tryCancel()

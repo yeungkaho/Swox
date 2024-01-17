@@ -8,7 +8,7 @@
 import Foundation
 import Network
 
-final public class SwoxProxyServer: SwoxSocks5TCPSessionDelegate, SwoxSocks5UDPRelaySessionDelegate {
+final public class SwoxProxyServer: SwoxSessionDelegate {
     
     enum Socks5ServerError: Error {
         case invalidPortNumber
@@ -97,10 +97,9 @@ final public class SwoxProxyServer: SwoxSocks5TCPSessionDelegate, SwoxSocks5UDPR
                         self.sessions.insert(socks5UDPSession)
                         socks5UDPSession.start()
                     case .http(let httpProxySession):
-                        // TODO:
-                        
+                        httpProxySession.delegate = self
                         self.sessions.insert(httpProxySession)
-                        
+                        httpProxySession.start()
                     }
                 case .failure(let error):
                     newConnection.tryCancel()
@@ -120,13 +119,7 @@ final public class SwoxProxyServer: SwoxSocks5TCPSessionDelegate, SwoxSocks5UDPR
         }
     }
     
-    func session(didEnd session: SwoxSocks5TCPSession) {
-        sessionsQueue.async(flags: [.barrier]) { [weak self] in
-            self?.sessions.remove(session)
-        }
-    }
-    
-    func session(didEnd session: SwoxSocks5UDPRelaySession) {
+    func session(didEnd session: SwoxProxySession) {
         sessionsQueue.async(flags: [.barrier]) { [weak self] in
             self?.sessions.remove(session)
         }

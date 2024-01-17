@@ -8,12 +8,18 @@
 import Foundation
 import Network
 
+protocol SwoxSessionDelegate: AnyObject {
+    func session(didEnd session: SwoxProxySession)
+}
+
 class SwoxProxySession {
     
     let inConnection: NWConnection
     let queue: DispatchQueue
     let sessionID: Int
     let logger: Logger
+    
+    weak var delegate: SwoxSessionDelegate?
     
     init(sessionID: Int, inConnection: NWConnection, queue: DispatchQueue, logger: Logger) throws {
         self.sessionID = sessionID
@@ -36,6 +42,10 @@ class SwoxProxySession {
     
     func connectionCancelled() {
         fatalError("not implemented")
+    }
+    
+    func cleanup() {
+        delegate?.session(didEnd: self)
     }
     
 }

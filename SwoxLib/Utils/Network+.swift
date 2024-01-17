@@ -14,3 +14,15 @@ extension NWConnection {
         }
     }
 }
+
+extension NWParameters {
+    static var defaultTCP: NWParameters {
+        let tcpOptions = NWProtocolTCP.Options()
+        tcpOptions.enableFastOpen = true
+        tcpOptions.noDelay = true
+        tcpOptions.connectionTimeout = 10
+        tcpOptions.persistTimeout = 10
+        tcpOptions.retransmitFinDrop = true
+        return  NWParameters(tls:nil, tcp:tcpOptions)
+    }
+}

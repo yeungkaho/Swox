@@ -8,27 +8,11 @@
 import Foundation
 import Network
 
-protocol SwoxSocks5TCPSessionDelegate: AnyObject {
-    func session(didEnd session: SwoxSocks5TCPSession)
-}
-
 final class SwoxSocks5TCPSession: SwoxProxySession {
-    
-    static let tcpParams: NWParameters = {
-        let tcpOptions = NWProtocolTCP.Options()
-        tcpOptions.enableFastOpen = true
-        tcpOptions.noDelay = true
-        tcpOptions.connectionTimeout = 10
-        tcpOptions.persistTimeout = 10
-        tcpOptions.retransmitFinDrop = true
-        return  NWParameters(tls:nil, tcp:tcpOptions)
-    }()
     
     enum State {
         case readingRequest, connected, ended
     }
-    
-    weak var delegate: SwoxSocks5TCPSessionDelegate?
     
     private let maximumReadLength = 8192
     private var outConnection: NWConnection!
@@ -55,7 +39,7 @@ final class SwoxSocks5TCPSession: SwoxProxySession {
             do {
                 let sockAddr = try Socks5Address(data: content)
                 let endpoint = NWEndpoint.hostPort(host: sockAddr.host, port: sockAddr.port)
-                self.outConnection = .init(to: endpoint, using: Self.tcpParams)
+                self.outConnection = .init(to: endpoint, using: .defaultTCP)
                 self.outConnection.stateUpdateHandler = { [weak self] newState in
                     self?.handleOutConnectionStateUpdate(newState: newState)
                 }
@@ -79,7 +63,8 @@ final class SwoxSocks5TCPSession: SwoxProxySession {
                 return
             }
             if let content = content {
-                self.outConnection.send(content: content, completion: .contentProcessed({ error in
+                self.outConnection.send(content: content, completion: .contentProcessed({  [weak self]  error in
+                    guard let self = self else { return }
                     if let error = error {
                         self.logger.error("[SOCKS5 TCP]Error when sending data to out connection: \(error)")
                         self.cleanup()
@@ -157,12 +142,11 @@ final class SwoxSocks5TCPSession: SwoxProxySession {
         cleanup()
     }
     
-    private func cleanup() {
+    override func cleanup() {
+        super.cleanup()
         state = .ended
         inConnection.tryCancel()
         outConnection.tryCancel()
-        delegate?.session(didEnd: self)
-        delegate = nil
     }
     
     deinit {
